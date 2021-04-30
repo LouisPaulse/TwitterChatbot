@@ -1,0 +1,7 @@
+wikipedia
+wikipedia-api
+pandas
+numpy
+jupyter
+keras
+nltk
