@@ -5,3 +5,6 @@ numpy
 jupyter
 keras
 nltk
+tweepy
+psycopg2
+
