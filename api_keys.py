@@ -1,0 +1,7 @@
+# Twitter
+
+api_key = "STMToSGGf270xb4lRFmwTdacq"
+api_secret_key = "y3nF3CIIs6g6OTkPhAXjFF7e4DSoN5RkBEC0gXLyxd9JtQK7pO"
+bearer_Token = "AAAAAAAAAAAAAAAAAAAAAP3oPAEAAAAA2daAoHhz%2FAUb39iHQtqne%2FMQDoY%3DgvxSFP8GIbOGOZO0M4WqEdlAqW0EHwjS6VPD2bpzOfVjPrLcmY"
+access_token = "1389887696986910725-nB1yM4LNajgDxRrezwC9I7mlEuuIuq"
+access_token_secret = "QKJfaXtaQ2VQrxeKnNU9yGlmHBJzOryHServa3d5Cabnb"
