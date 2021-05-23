@@ -7,4 +7,6 @@ keras
 nltk
 tweepy
 psycopg2
+tflearn
+tensorflow
 
