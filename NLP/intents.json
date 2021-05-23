@@ -1,0 +1,38 @@
+{
+  "intents":[
+    { "tag":  "greeting",
+      "patterns": ["Hi", "Hey", "How are you?", "Yo", "Good day"],
+      "response": ["Hi there, I'm Chatty McBot. How can I assist you today?"]
+    },
+    { "tag":  "goodbye",
+      "patterns": ["Goodbye", "See you later", "Bye"],
+      "response": ["See you later", "Good bye", "Good Bye. Have a great day further", "Live long and prosper"]
+    },
+    { "tag":  "thanks",
+      "patterns": ["Thank you", "Thanks", "That's helpful", "Ty", "Nice one", "Lol"],
+      "response": ["Glad I could help :)", "It's a pleasure <3", "You're welcome."]
+    },
+    { "tag":  "question",
+      "patterns": ["What can you do?", "Tell me more about your functionalities", "What are your functionalities?"],
+      "response": ["I can provide you with information such as weather, time, location, and data from wikipedia!"]
+    },
+    { "tag":  "time",
+      "patterns": ["What's the time?", "Can you provide the time please", "Current time?"],
+      "response": ["The current time is {provide time here}"]
+    },
+    { "tag":  "weather",
+      "patterns": ["What's the weather?", "What's the temperature"],
+      "response": ["The weather is {provide weather information here}"]
+    },
+    { "tag": "funny",
+      "patterns": ["Tell me a joke", "Tell me something funny", "Can you make a joke?"],
+      "response": [
+        "Did you hear about the mathematician who’s afraid of negative numbers?\n\nHe’ll stop at nothing to avoid them.",
+        "Why do we tell actors to “break a leg?”\n\nBecause every play has a cast.",
+        "Why don’t scientists trust atoms?\n\nBecause they make up everything."
+      ]
+    }
+  ]
+
+
+}
