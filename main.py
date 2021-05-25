@@ -16,6 +16,7 @@ class Main:
             database_ini_location="database.ini",
             database_section="postgresql",
         )
+        self.nlp_obj = nlp_implementation.NLPImplementation('./NLP/intents.json')
 
     def update_database(self):
         list_messages = self.twitter_api.list_direct_messages_to_be_stored()
@@ -29,7 +30,7 @@ class Main:
                 user_location=message["location"],
             )
         for message in list_messages:
-            print(message)
+            # print(message)
             if message["recipient_id"] != self.MY_MESSAGE_ID:
                 self.database_obj.store_bot_message_info_database(
                     message_id=message["message_id"],
@@ -47,15 +48,13 @@ class Main:
                     timestamp=message["time_stamp"],
                 )
 
-    @staticmethod
-    def nlp_model_go(message_text):
-        nlp_obj = nlp_implementation.NLPImplementation('./NLP/intents.json')
-
-        return nlp_obj.response(message_text)
+    def nlp_model_go(self, message_text):
+        return self.nlp_obj.response(message_text)
 
     def send_messages_to_unanswered_recipients_texts(self):
         items = self.database_obj.get_unanswered_messages()
         for i in items:
+            print(f"Question: {i['message_text']}")
             outcome = self.nlp_model_go(i['message_text'])
             print(f"This is the outcome: {outcome}")
 
@@ -77,4 +76,3 @@ if __name__ == '__main__':
         # Maintains a 1min wait time before requesting new data from twitter (Adheres to API 15min / 15 requests)
         # On direct message retrievals
         time.sleep(60)
-        break

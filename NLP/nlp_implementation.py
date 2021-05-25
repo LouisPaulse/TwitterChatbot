@@ -1,5 +1,12 @@
+import re
+
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
+import spacy
+from geopy.geocoders import Nominatim
+from timezonefinder import TimezoneFinder
+from datetime import datetime
+import pytz
 
 import numpy as np
 import random
@@ -11,6 +18,9 @@ from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.models import load_model
 
 import json
+import wikipedia
+import python_weather
+import asyncio
 
 
 class NLPImplementation:
@@ -22,6 +32,7 @@ class NLPImplementation:
         self.stemmer = LancasterStemmer()
         self.intents_words, self.intents_documents, self.intents_classes = self.apply_tokenization_on_intents()
         self.model_save_name = "chatbot_model.h5"
+        self.spacy = spacy.load("en_core_web_sm")
 
     def clean_up_sentence(self, sentence):
         # tokenize the pattern
@@ -44,6 +55,42 @@ class NLPImplementation:
 
         return np.array(bag)
 
+    def spacy_retrieve_nouns(self, text):
+        """ Explain what spacy is """
+        doc = self.spacy(text)
+        ents = []
+        for ent in doc.ents:
+            ents.append(ent)
+        return ents
+
+    @staticmethod
+    async def get_weather(location):
+        client = python_weather.Client(format=python_weather.METRIC)
+        weather = await client.find(location)
+        current_temperature = int((weather.current.temperature - 32) * 5/9)
+        return_text = f"Current temperature in {location} is {current_temperature}°C" \
+                      f"\n\nThe forecast temperature for the next 5 days will be: \n"
+
+        for forecast in weather.forecasts:
+            temp = int((forecast.temperature-32)*5/9)
+            return_text += f"Date: {forecast.date.date()}, Sky: {forecast.sky_text}, Temperature: {temp}°C\n"
+
+        await client.close()
+
+        return return_text
+
+    @staticmethod
+    def get_time_by_city(city_location):
+        g = Nominatim(user_agent='twitter_chat_bot')
+        location = g.geocode(city_location)
+
+        obj = TimezoneFinder()
+        result = obj.timezone_at(lng=location.longitude, lat=location.latitude)
+        t = pytz.timezone(result)
+        time = datetime.now(t).strftime('%Y:%m:%d %H:%M:%S')
+
+        return str(time)
+
     def response(self, sentence):
         with open(self.intents_location) as json_data:
             intents = json.load(json_data)
@@ -58,6 +105,32 @@ class NLPImplementation:
                     # find a tag matching the first result
                     if i['tag'] == results[0]["intent"]:
                         # return a random response from the intent
+                        # If question is for specific data such as Time, Weather, Wikipedia, etc, return specified info
+                        if i['tag'] == 'information':
+                            topic = re.search('tell me about (.*)', sentence.lower())
+                            if topic:
+                                topic = topic.group(1)
+                                try:
+                                    wiki = wikipedia.summary(topic)
+                                except (wikipedia.exceptions.PageError, wikipedia.exceptions.DisambiguationError) as e:
+                                    wiki = str(e)
+                                return wiki
+                            return "For me to understand your wikipedia question, use the format 'tell me about *'"
+
+                        if i['tag'] == 'time':
+                            ents = self.spacy_retrieve_nouns(sentence)
+                            time = self.get_time_by_city(str(ents[0]))
+                            return f"The current time in {str(ents[0])} is {time}"
+
+                        if i['tag'] == 'weather':
+                            ents = self.spacy_retrieve_nouns(sentence)
+
+                            loop = asyncio.get_event_loop()
+
+                            data_weather = loop.run_until_complete(self.get_weather(str(ents[0])))
+
+                            return data_weather
+
                         return random.choice(i['response'])
 
                 results.pop(0)
@@ -192,3 +265,5 @@ class NLPImplementation:
             print("Model was not trained. Now training model")
             self.train_model()
             self.model = load_model(self.model_save_name)
+
+
