@@ -2,7 +2,7 @@
   "intents":[
     { "tag":  "greeting",
       "patterns": ["Hi", "Hey", "How are you?", "Yo", "Good day"],
-      "response": ["Hi there, I'm Chatty McBot. How can I assist you today?"]
+      "response": ["Hi there, I'm Chatty McBot. Please excuse my response times. Twitter only allows me to check messages every minute :("]
     },
     { "tag":  "goodbye",
       "patterns": ["Goodbye", "See you later", "Bye"],
@@ -11,6 +11,10 @@
     { "tag":  "thanks",
       "patterns": ["Thank you", "Thanks", "That's helpful", "Ty", "Nice one", "Lol"],
       "response": ["Glad I could help :)", "It's a pleasure <3", "You're welcome."]
+    },
+    { "tag": "nice",
+      "patterns": ["How are you?", "How's it going?", "How you feeling?", "What's up"],
+      "response": ["I'm doing as great as a bot can be :D"]
     },
     { "tag":  "question",
       "patterns": ["What can you do?", "Tell me more about your functionalities", "What are your functionalities?"],
@@ -31,8 +35,10 @@
         "Why do we tell actors to “break a leg?”\n\nBecause every play has a cast.",
         "Why don’t scientists trust atoms?\n\nBecause they make up everything."
       ]
+    },
+    { "tag": "information",
+      "patterns": ["Tell me about", "Provide more information on", "Wikipedia"],
+      "response": ["Data from wikipedia"]
     }
   ]
-
-
 }

@@ -9,4 +9,9 @@ tweepy
 psycopg2
 tflearn
 tensorflow
-
+python_weather
+spacy
+geopy
+timezonefinder
+pytz
+googlefinance
