@@ -233,7 +233,7 @@ class DatabaseImplementation:
         return updated_rows
 
     @staticmethod
-    def iter_row(cursor, size=10):
+    def iter_row(cursor, size=100):
         while True:
             rows = cursor.fetchmany(size)
             if not rows:
@@ -256,7 +256,7 @@ class DatabaseImplementation:
             """)
             print("Number of unanswered messages: ", cur.rowcount)
             items = []
-            for row in self.iter_row(cur, 10):
+            for row in self.iter_row(cur, 100):
                 item = {'user_id': row[0], 'message_id': row[1], 'message_text': row[2], 'timestamp': row[3]}
                 items.append(item)
             cur.close()

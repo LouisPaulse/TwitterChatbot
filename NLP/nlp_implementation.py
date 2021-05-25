@@ -7,6 +7,8 @@ from geopy.geocoders import Nominatim
 from timezonefinder import TimezoneFinder
 from datetime import datetime
 import pytz
+from yahoofinancials import YahooFinancials
+import reticker
 
 import numpy as np
 import random
@@ -130,6 +132,17 @@ class NLPImplementation:
                             data_weather = loop.run_until_complete(self.get_weather(str(ents[0])))
 
                             return data_weather
+
+                        if i['tag'] == 'stocks':
+                            ticker = reticker.TickerExtractor().extract(sentence)
+                            print(ticker)
+                            return_text = ""
+                            for tick in ticker:
+                                yahoo_price = YahooFinancials(tick)
+                                return_text += f"Current price of {tick} is {yahoo_price.get_currency()} " \
+                                               f"{yahoo_price.get_current_price()}\n"
+
+                            return return_text
 
                         return random.choice(i['response'])
 
@@ -262,7 +275,7 @@ class NLPImplementation:
 
             self.model = load_model(self.model_save_name)
         except FileNotFoundError as e:
-            print("Model was not trained. Now training model")
+            print("Model was not trained yet. Now training model")
             self.train_model()
             self.model = load_model(self.model_save_name)
 
