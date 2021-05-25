@@ -1,7 +1,7 @@
 {
   "intents":[
     { "tag":  "greeting",
-      "patterns": ["Hi", "Hey", "How are you?", "Yo", "Good day"],
+      "patterns": ["Hi", "Hey", "How are you?", "Yo", "Good day", "Awe", "Sup"],
       "response": ["Hi there, I'm Chatty McBot. Please excuse my response times. Twitter only allows me to check messages every minute :("]
     },
     { "tag":  "goodbye",
