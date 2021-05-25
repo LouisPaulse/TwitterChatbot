@@ -121,17 +121,18 @@ class NLPImplementation:
 
                         if i['tag'] == 'time':
                             ents = self.spacy_retrieve_nouns(sentence)
-                            time = self.get_time_by_city(str(ents[0]))
                             if len(ents) > 0:
+                                time = self.get_time_by_city(str(ents[0]))
                                 return f"The current time in {str(ents[0])} is {time}"
 
                         if i['tag'] == 'weather':
                             ents = self.spacy_retrieve_nouns(sentence)
-
-                            loop = asyncio.get_event_loop()
-
-                            data_weather = loop.run_until_complete(self.get_weather(str(ents[0])))
+                            print(ents)
                             if len(ents) > 0:
+                                loop = asyncio.get_event_loop()
+
+                                data_weather = loop.run_until_complete(self.get_weather(str(ents[0])))
+
                                 return data_weather
 
                         if i['tag'] == 'stocks':

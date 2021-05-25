@@ -18,15 +18,15 @@
     },
     { "tag":  "question",
       "patterns": ["What can you do?", "Tell me more about your functionalities", "What are your functionalities?"],
-      "response": ["I can provide you with information such as weather, time, location, and data from wikipedia!"]
+      "response": ["I can provide you with information such as jokes, weather, time, stock price, and data from wikipedia!"]
     },
     { "tag":  "time",
       "patterns": ["What's the time?", "Can you provide the time please", "Current time?"],
-      "response": ["The current time is {provide time here}"]
+      "response": ["Sorry. I did not understand the location mentioned, to retrieve the time for."]
     },
     { "tag":  "weather",
       "patterns": ["What's the weather?", "What's the temperature"],
-      "response": ["The weather is {provide weather information here}"]
+      "response": ["Sorry. I did not understand the location mentioned, to retrieve the weather for."]
     },
     { "tag": "funny",
       "patterns": ["Tell me a joke", "Tell me something funny", "Can you make a joke?"],
