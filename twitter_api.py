@@ -8,6 +8,8 @@ class TwitterAPIFunctions:
         auth.set_access_token(access_token, access_token_secret)
 
         self.api = tweepy.API(auth)
+        self.screen_name = self.api.get_settings()['screen_name']
+        self.My_Message_ID = self.api.get_user(self.screen_name).id_str
 
     def get_user_info(self, user_id):
         """ retrieves basic user information, to be saved in database"""

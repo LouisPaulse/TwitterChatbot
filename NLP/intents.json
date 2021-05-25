@@ -39,6 +39,17 @@
     { "tag": "information",
       "patterns": ["Tell me about", "Provide more information on", "Wikipedia"],
       "response": ["Data from wikipedia"]
+    },
+    { "tag":  "stocks",
+      "patterns": [
+        "What's the stock price of",
+        "What's the price of",
+        "Current stock value of",
+        "Current price of",
+        "Stock price of",
+        "Stock value of"
+      ],
+      "response": ["Please use ticker symbol of stock. Eg Apple is AAPL"]
     }
   ]
 }

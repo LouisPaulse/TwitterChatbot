@@ -10,7 +10,6 @@ class Main:
     def __init__(self):
         self.API_CURRENT_RATE = 0
         self.API_RATE_LIMIT = 15  # 15 calls per 15 min on direct message retrieval
-        self.MY_MESSAGE_ID = '1389887696986910725'  # My twitter accounts unique message id
         self.twitter_api = TwitterAPIFunctions()
         self.database_obj = DatabaseImplementation(
             database_ini_location="database.ini",
@@ -31,7 +30,7 @@ class Main:
             )
         for message in list_messages:
             # print(message)
-            if message["recipient_id"] != self.MY_MESSAGE_ID:
+            if message["recipient_id"] != self.twitter_api.My_Message_ID:
                 self.database_obj.store_bot_message_info_database(
                     message_id=message["message_id"],
                     user_id=message["user_id"],
@@ -63,9 +62,9 @@ class Main:
 
 
 if __name__ == '__main__':
-    main = Main()
 
     while True:
+        main = Main()
         print("Retrieving Messages from twitter and storing them in Database")
         main.update_database()
         print("Retrieval Complete")
