@@ -122,7 +122,8 @@ class NLPImplementation:
                         if i['tag'] == 'time':
                             ents = self.spacy_retrieve_nouns(sentence)
                             time = self.get_time_by_city(str(ents[0]))
-                            return f"The current time in {str(ents[0])} is {time}"
+                            if len(ents) > 0:
+                                return f"The current time in {str(ents[0])} is {time}"
 
                         if i['tag'] == 'weather':
                             ents = self.spacy_retrieve_nouns(sentence)
@@ -130,8 +131,8 @@ class NLPImplementation:
                             loop = asyncio.get_event_loop()
 
                             data_weather = loop.run_until_complete(self.get_weather(str(ents[0])))
-
-                            return data_weather
+                            if len(ents) > 0:
+                                return data_weather
 
                         if i['tag'] == 'stocks':
                             ticker = reticker.TickerExtractor().extract(sentence)
@@ -141,8 +142,8 @@ class NLPImplementation:
                                 yahoo_price = YahooFinancials(tick)
                                 return_text += f"Current price of {tick} is {yahoo_price.get_currency()} " \
                                                f"{yahoo_price.get_current_price()}\n"
-
-                            return return_text
+                            if len(return_text) > 0:
+                                return return_text
 
                         return random.choice(i['response'])
 
