@@ -135,11 +135,13 @@ class NLPImplementation:
                                 return data_weather
 
                         if i['tag'] == 'stocks':
-                            ticker = reticker.TickerExtractor().extract(sentence)
+                            ticker = reticker.TickerExtractor().extract(sentence.upper())
                             print(ticker)
                             return_text = ""
                             for tick in ticker:
                                 yahoo_price = YahooFinancials(tick)
+                                if yahoo_price.get_current_price() is None:
+                                    continue
                                 return_text += f"Current price of {tick} is {yahoo_price.get_currency()} " \
                                                f"{yahoo_price.get_current_price()}\n"
                             if len(return_text) > 0:
